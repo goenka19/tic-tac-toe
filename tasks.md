@@ -17,3 +17,9 @@
 
 board array will have the input of strings which will then displayed in the container grid 
 
+
+
+check only when counter is plus 5 
+ when win
+    disable all the divs 
+    button to restart the game

@@ -1,5 +1,6 @@
 const gameboard = () =>
 {
+    //setting up the player and the array of board
     let board = new Array(9);
     board = ['','','','','','','','',''];
     let player = (symbol) =>
@@ -13,6 +14,7 @@ const gameboard = () =>
     //DOM - selection of blocks.
     var blocks = document.querySelectorAll('.block');
     var counter = 1;
+
     blocks.forEach((block)=>
     {
         block.addEventListener('click', ()=>
@@ -29,9 +31,10 @@ const gameboard = () =>
                     block.textContent = player_two.getsymbol();
                 }
                 board[parseInt(block.getAttribute('value'))] = block.textContent;
-                console.log(board[parseInt(block.getAttribute('value'))]);
                 counter++;
-                //console.log(board);
+
+                let checkvalue = check();
+                console.log(checkvalue)
             }
             else if(block.textContent != '')
             {
@@ -39,6 +42,7 @@ const gameboard = () =>
             }
         })
     })
+
     //for inserting the board to the screen 
     function display()
     {   
@@ -52,7 +56,33 @@ const gameboard = () =>
         })
     }
     
-
+    function check()
+    {
+        var winconditions = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+        ]
+        
+        winconditions.every((condition)=>
+        {
+            if(board[condition[0]] == board[condition[1]] && board[condition[1]] == board[condition[2]] && counter>5 && board[condition[0]] != '')
+            {
+                console.log('hello world');
+                return true
+            }
+            else 
+            {
+                console.log('Fuck the world');
+                return false
+            }
+        })
+    }
     return{board};
 }
 
