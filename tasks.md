@@ -23,3 +23,8 @@ check only when counter is plus 5
  when win
     disable all the divs 
     button to restart the game
+
+
+check game draw 
+
+

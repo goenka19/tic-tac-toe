@@ -15,38 +15,44 @@ const gameboard = () =>
     var blocks = document.querySelectorAll('.block');
     var counter = 1;
 
-    function playmove()
+    function play()
     {
         blocks.forEach((block)=>
         {
-            block.addEventListener('click', ()=>
-            {
-                console.log(counter);
-                if(block.textContent == '')
-                {
-                    if(counter % 2 == 1)
-                    {
-                        block.textContent = player_one.getsymbol();
-                    }
-                    else if (counter % 2 == 0)
-                    {
-                        block.textContent = player_two.getsymbol();
-                    }
-                    board[parseInt(block.getAttribute('value'))] = block.textContent;
-
-                    if (counter>5)
-                    {
-                        check();
-                    }
-                    counter++;
-                }
-                else if(block.textContent != '')
-                {
-                    console.log('You already selected that.');
-                }
-            })
+            block.addEventListener('click',  mylistner)
         })
     }
+    function mylistner()
+    {
+        playmove(block);
+    }
+    function playmove(block)
+    {
+        console.log(counter);
+        if(block.textContent == '')
+        {
+            if(counter % 2 == 1)
+            {
+                block.textContent = player_one.getsymbol();
+            }
+            else if (counter % 2 == 0)
+            {
+                block.textContent = player_two.getsymbol();
+            }                    
+            board[parseInt(block.getAttribute('value'))] = block.textContent;
+
+            if (counter>4)
+            {
+                check();
+            }
+            counter++;
+        }
+        else if(block.textContent != '')
+        {
+            console.log('You already selected that.');
+        }
+    }
+    
     
 
     //for inserting the board to the screen 
@@ -81,6 +87,9 @@ const gameboard = () =>
             if(board[condition[0]] == board[condition[1]] && board[condition[1]] == board[condition[2]] && board[condition[0]] != '')
             {
                 cntr = 1;
+                console.log('hello');
+                stopplay();
+                
                 return false;
             }
             else 
@@ -90,6 +99,18 @@ const gameboard = () =>
         })
 
     }
+
+    function stopplay()
+    {   
+        blocks.forEach((block) =>
+        {
+            console.log('eh');
+            block.removeEventListener('click', playmove)
+        })
+    }
+
+       
+    play();
     return{board};
 }
 
