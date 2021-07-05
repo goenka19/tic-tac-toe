@@ -14,46 +14,48 @@ const gameboard = () =>
     //DOM - selection of blocks.
     var blocks = document.querySelectorAll('.block');
     var counter = 1;
+    var cntr = 0;
 
     function play()
     {
         blocks.forEach((block)=>
         {
-            block.addEventListener('click',  mylistner)
+            block.addEventListener('click',  ()=>
+            {
+                if (cntr == 1)
+                {
+
+                }
+                else
+                {
+                    if(block.textContent == '')
+                    {
+                        if(counter % 2 == 1)
+                        {
+                            block.textContent = player_one.getsymbol();
+                        }
+                        else if (counter % 2 == 0)
+                        {
+                            block.textContent = player_two.getsymbol();
+                        }                    
+                        board[parseInt(block.getAttribute('value'))] = block.textContent;
+
+                        if (counter>4)
+                        {
+                            check();
+                        }
+                        //console.log(counter);  
+                        counter++;
+                    }
+                    else if(block.textContent != '')
+                    {
+                        console.log('You already selected that.');
+                    }
+                }
+            })
         })
     }
-    function mylistner()
-    {
-        playmove(block);
-    }
-    function playmove(block)
-    {
-        console.log(counter);
-        if(block.textContent == '')
-        {
-            if(counter % 2 == 1)
-            {
-                block.textContent = player_one.getsymbol();
-            }
-            else if (counter % 2 == 0)
-            {
-                block.textContent = player_two.getsymbol();
-            }                    
-            board[parseInt(block.getAttribute('value'))] = block.textContent;
-
-            if (counter>4)
-            {
-                check();
-            }
-            counter++;
-        }
-        else if(block.textContent != '')
-        {
-            console.log('You already selected that.');
-        }
-    }
-    
-    
+        
 
     //for inserting the board to the screen 
     function display()
@@ -67,8 +69,6 @@ const gameboard = () =>
             }
         })
     }
-    var cntr = 0;
-
     function check()
     {
         var winconditions = [
@@ -81,35 +81,24 @@ const gameboard = () =>
             [0,4,8],
             [2,4,6]
         ]
-        
+        var conditioncounter = 1;
         winconditions.every((condition)=>
         {
+
             if(board[condition[0]] == board[condition[1]] && board[condition[1]] == board[condition[2]] && board[condition[0]] != '')
             {
                 cntr = 1;
-                console.log('hello');
-                stopplay();
-                
+                console.log('you win', conditioncounter);                
                 return false;
             }
             else 
             {
+                conditioncounter++;
                 return true
             }
         })
 
-    }
-
-    function stopplay()
-    {   
-        blocks.forEach((block) =>
-        {
-            console.log('eh');
-            block.removeEventListener('click', playmove)
-        })
-    }
-
-       
+    }  
     play();
     return{board};
 }
