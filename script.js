@@ -15,33 +15,39 @@ const gameboard = () =>
     var blocks = document.querySelectorAll('.block');
     var counter = 1;
 
-    blocks.forEach((block)=>
+    function playmove()
     {
-        block.addEventListener('click', ()=>
+        blocks.forEach((block)=>
         {
-            //console.log(counter);
-            if(block.textContent == '')
+            block.addEventListener('click', ()=>
             {
-                if(counter % 2 == 1)
+                console.log(counter);
+                if(block.textContent == '')
                 {
-                    block.textContent = player_one.getsymbol();
-                }
-                else if (counter % 2 == 0)
-                {
-                    block.textContent = player_two.getsymbol();
-                }
-                board[parseInt(block.getAttribute('value'))] = block.textContent;
-                counter++;
+                    if(counter % 2 == 1)
+                    {
+                        block.textContent = player_one.getsymbol();
+                    }
+                    else if (counter % 2 == 0)
+                    {
+                        block.textContent = player_two.getsymbol();
+                    }
+                    board[parseInt(block.getAttribute('value'))] = block.textContent;
 
-                let checkvalue = check();
-                console.log(checkvalue)
-            }
-            else if(block.textContent != '')
-            {
-                console.log('WTF');
-            }
+                    if (counter>5)
+                    {
+                        check();
+                    }
+                    counter++;
+                }
+                else if(block.textContent != '')
+                {
+                    console.log('You already selected that.');
+                }
+            })
         })
-    })
+    }
+    
 
     //for inserting the board to the screen 
     function display()
@@ -55,7 +61,8 @@ const gameboard = () =>
             }
         })
     }
-    
+    var cntr = 0;
+
     function check()
     {
         var winconditions = [
@@ -71,17 +78,17 @@ const gameboard = () =>
         
         winconditions.every((condition)=>
         {
-            if(board[condition[0]] == board[condition[1]] && board[condition[1]] == board[condition[2]] && counter>5 && board[condition[0]] != '')
+            if(board[condition[0]] == board[condition[1]] && board[condition[1]] == board[condition[2]] && board[condition[0]] != '')
             {
-                console.log('hello world');
-                return true
+                cntr = 1;
+                return false;
             }
             else 
             {
-                console.log('Fuck the world');
-                return false
+                return true
             }
         })
+
     }
     return{board};
 }
