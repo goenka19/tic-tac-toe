@@ -1,8 +1,7 @@
 const gameboard = () =>
 {
     //setting up the player and the array of board
-    let board = new Array(9);
-    board = ['','','','','','','','',''];
+    let board = ['','','','','','','','',''];
     let player = (symbol) =>
     {
         getsymbol = () => symbol;    
@@ -13,6 +12,7 @@ const gameboard = () =>
 
     //DOM - selection of blocks.
     var blocks = document.querySelectorAll('.block');
+    var resultdiv = document.querySelector('.result');
     var counter = 1;
     var cntr = 0;
 
@@ -24,7 +24,7 @@ const gameboard = () =>
             {
                 if (cntr == 1)
                 {
-
+                    console.log('refresh the page to continue');
                 }
                 else
                 {
@@ -82,21 +82,57 @@ const gameboard = () =>
             [2,4,6]
         ]
         var conditioncounter = 1;
-        winconditions.every((condition)=>
-        {
-
-            if(board[condition[0]] == board[condition[1]] && board[condition[1]] == board[condition[2]] && board[condition[0]] != '')
+        for(let i = 0; i < winconditions.length; i++ )
+        {            
+            if(board[winconditions[i][0]] == board[winconditions[i][1]] && board[winconditions[i][1]] == board[winconditions[i][2]] && board[winconditions[i][0]] != '' && board[winconditions[i][0]] == player_one.getsymbol())
             {
                 cntr = 1;
-                console.log('you win', conditioncounter);                
-                return false;
+
+                let result = document.createElement('h2');
+                result.textContent = 'Player 1 Win  ';
+
+                let refresh = document.createElement('button')
+                refresh.innerHTML = 'Refresh';
+                refresh.setAttribute('onClick', 'window.location.reload();');
+                result.appendChild(refresh);
+                
+                resultdiv.appendChild(result);
+                break;                
+            }
+            else if(board[winconditions[i][0]] == board[winconditions[i][1]] && board[winconditions[i][1]] == board[winconditions[i][2]] && board[winconditions[i][0]] != '' && board[winconditions[i][0]] == player_two.getsymbol())
+            {
+                cntr = 1;
+                let result = document.createElement('h2');
+                result.textContent = 'Player 2 Win';
+
+                let refresh = document.createElement('button')
+                refresh.innerHTML = 'Refresh';
+                refresh.setAttribute('onClick', 'window.location.reload();');
+                result.appendChild(refresh);
+
+                resultdiv.appendChild(result);                
+                break;
+            }
+            
+            else if(board.includes(''))
+            {
+                continue;
             }
             else 
             {
-                conditioncounter++;
-                return true
+                let result = document.createElement('h2');
+                result.textContent = 'Draw Game';
+
+                let refresh = document.createElement('button')
+                refresh.innerHTML = 'Refresh';
+                refresh.setAttribute('onClick', 'window.location.reload();');
+                result.appendChild(refresh);
+
+                resultdiv.appendChild(result);                
+                break;
             }
-        })
+            
+        }
 
     }  
     play();
