@@ -1,3 +1,5 @@
+//old code without implementing the changes suggested on code review 
+
 const gameboard = () =>
 {
     //setting up the player and the array of board

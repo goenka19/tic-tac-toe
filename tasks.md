@@ -27,4 +27,6 @@ check only when counter is plus 5
 
 check game draw 
 
+ALL DONE
+
 
